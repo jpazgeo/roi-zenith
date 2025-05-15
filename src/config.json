@@ -1,0 +1,24 @@
+{
+  "name": "roi-zenith",
+  "supportEmail": "integrations@geotab.com",
+  "version": "0.0.1",
+  "items": [{
+    
+    
+    "url": "roiZenith.html",
+    "category": "SustainabilityId",
+    "menuName": {
+      "en": "ROI Zenith"
+    },
+    
+    "icon": "images/icon.svg"
+  }],
+  
+  
+  "dev": {
+    "root": "roiZenith",
+    "dist": {
+      "host": "https://www.example.com/myaddin/"
+    }
+  }
+}
