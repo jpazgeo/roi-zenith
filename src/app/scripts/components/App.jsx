@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 
-import DevicesPage from './DevicesPage.jsx';
+import Main from './Main.jsx';
 
 
 import GeotabContext from '../contexts/Geotab';
@@ -17,11 +17,7 @@ const App = ({ geotabApi, geotabState, appName }) => {
   return (
     <>
       <GeotabContext.Provider value={[context, setContext]}>
-        
-        
-        <DevicesPage />
-        
-        
+        <Main />
       </GeotabContext.Provider>
     </>
   );
