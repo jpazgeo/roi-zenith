@@ -5,22 +5,24 @@ import {
     TextInput
 } from '@geotab/zenith'
 
-const CalculationInput = ({ costDescription, savingsDescription}) => {
-    const [cost, setCost] = useState(0);
-    const [savings, setSavings] = useState(0.0)
+const CalculationInput = ({ costDescription, savingsDescription }) => {
     const [context, setContext] = useContext(GeotabContext);
+    const [cost, setCost] = useState(0);
+    const [savings, setSavings] = useState(context.savings || 0.00)
 
-    const handleCostChange = useCallback((e) => {
+    const handleCostChange = ((e) => {
         const costValue = e.target.value
         setCost(costValue)
-        setContext({ ...context, cost: costValue })
-    }, []);
 
-    const handleSavingsChange = useCallback((e) => {
-        const costValue = e.target.value
-        setCost(costValue)
         setContext({ ...context, cost: costValue })
-    }, []);
+    });
+
+    const handleSavingsChange = ((e) => {
+        const savingsValue = e.target.value
+        setSavings(savingsValue)
+
+        setContext({ ...context, savings: savingsValue })
+    });
     return (
         <div className='roi-calculation-container'>
             <div className='roi-calculation-input'>
