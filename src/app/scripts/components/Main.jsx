@@ -58,7 +58,7 @@ const Main = () => {
                         These are estimations. External factors may affect the results.
                     </Banner>
                 </div> : <></>}
-                <CalculationInput description={"Average fuel cost per gallon"} />
+                <CalculationInput costDescription={"Average fuel cost per gallon"} savingsDescription={"Savings percentage"}/>
                 <FuelEficiency dateRange={dateRangeValue} />
             </div>
         </Layout >

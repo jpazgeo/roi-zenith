@@ -6,6 +6,12 @@
     margin-bottom: 8px;
 }
 
+.roi-calculation-container {
+    display: flex;
+    width: 71%;
+    justify-content: space-around;
+}
+
 .roi-calculation-input {
     margin-left: 24px;
     margin-bottom: 12px;

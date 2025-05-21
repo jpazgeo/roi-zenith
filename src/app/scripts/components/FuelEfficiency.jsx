@@ -6,23 +6,28 @@ import {
     SummaryTileBar,
     SummaryTile,
     IconDispatchAsset,
-    IconDollar
+    IconDollar,
+    IconFuelGas,
+    IconBadge
 } from '@geotab/zenith'
 
 import { Overview } from '@geotab/zenith/dist/overview/overview'
+
+const RESULTS_LIMIT = 50000
 
 const FuelEfficiency = ({ dateRange }) => {
     const [context, setContext] = useContext(GeotabContext);
     const { geotabApi, logger, cost: fuelPrice } = context;
 
     const [distance, setDistance] = useState(0.00)
+    const [totalFuelUsed, setTotalFuelUsed] = useState(0.00)
     const [totalFuelCost, setTotalFuelCost] = useState(0.00)
 
     const tripsApiCall = (fromDate, toDate) => {
         geotabApi.call('Get', {
             typeName: 'Trip',
             search: { fromDate, toDate },
-            resultsLimit: 1000
+            resultsLimit: RESULTS_LIMIT
         }, tripsResult => {
             console.log(`Trips Result:`, tripsResult);
             const totalDistance = tripsResult.reduce((sum, trip) => sum + (trip.distance || 0), 0);
@@ -36,16 +41,20 @@ const FuelEfficiency = ({ dateRange }) => {
         geotabApi.call('Get', {
             typeName: 'FuelUsed',
             search: { fromDate, toDate },
-            resultsLimit: 1000
+            resultsLimit: RESULTS_LIMIT
         }, fuelUsedResult => {
             console.log(`Fuel Used Result:`, fuelUsedResult);
 
             const totalFuelUsed = fuelUsedResult.reduce((sum, entry) => sum + (entry.totalFuelUsed || 0), 0);
             console.log(typeof totalFuelUsed)
             console.log(typeof fuelPrice)
-            const fuelCost = totalFuelUsed.toFixed(2) * fuelPrice;
-            setTotalFuelCost(fuelCost)
+            setTotalFuelUsed(totalFuelUsed.toFixed(2))
         }, fuelUsedError => console.error('Something went wrong while trying to retrieve fuel used data', fuelUsedError))
+    }
+
+    const calculateTotalFuelCost = () => {
+        const fuelCost = totalFuelUsed * fuelPrice;
+        setTotalFuelCost(fuelCost.toFixed(2))
     }
 
     useEffect(() => {
@@ -59,31 +68,7 @@ const FuelEfficiency = ({ dateRange }) => {
         fuelUsedApiCall(fromDate, toDate)
     }, [dateRange])
 
-    // api.call("Get", {
-    //     typeName: "Trip",
-    //     search: { fromDate, toDate },
-    //     resultsLimit: 1000
-    // }, tripResult => {
-    //     const totalDistance = tripResult.reduce((sum, trip) => sum + (trip.distance || 0), 0);
-
-    //     api.call("Get", {
-    //         typeName: "FuelUsed",
-    //         search: { fromDate, toDate },
-    //         resultsLimit: 1000
-    //     }, fuelResult => {
-    //         const totalFuelUsed = fuelResult.reduce((sum, entry) => sum + (entry.totalFuelUsed || 0), 0);
-    //         const fuelCost = totalFuelUsed * fuelPrice;
-    //         const fuelSavings = fuelCost * (markupPercent / 100);
-
-    //         resolve({ fuelCost, fuelSavings, markupPercent });
-    //     }, fuelErr => {
-    //         console.error("FuelUsed API error:", fuelErr);
-    //         reject("Failed to fetch FuelUsed data.");
-    //     });
-    // }, tripErr => {
-    //     console.error("Trip API error:", tripErr);
-    //     reject("Failed to fetch Trip data.");
-    // });
+    useEffect(calculateTotalFuelCost, [fuelPrice, totalFuelUsed])
 
     return (
         <SummaryTileBar>
@@ -94,10 +79,24 @@ const FuelEfficiency = ({ dateRange }) => {
                     title={distance}
                 />
             </SummaryTile>
-            <SummaryTile title="Total Fuel Cost" size='medium'>
+            <SummaryTile title="Total Fuel Used" size='medium'>
+                <Overview
+                    description="Gallons"
+                    icon={<IconFuelGas className="zen-summary-tile-test" size="huger" />}
+                    title={totalFuelUsed}
+                />
+            </SummaryTile>
+            <SummaryTile title="Total Fuel Cost" size='medium' tileType="error">
                 <Overview
                     description="UNIT"
                     icon={<IconDollar className="zen-summary-tile-test" size="huger" />}
+                    title={totalFuelCost}
+                />
+            </SummaryTile>
+            <SummaryTile title="Total Fuel Cost after savings" size='medium' tileType="success">
+                <Overview
+                    description="UNIT"
+                    icon={<IconBadge className="zen-summary-tile-test" size="huger" />}
                     title={totalFuelCost}
                 />
             </SummaryTile>
