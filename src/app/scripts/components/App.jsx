@@ -12,7 +12,7 @@ import '@geotab/zenith/dist/index.css'
 
 const App = ({ geotabApi, geotabState, appName }) => {
   const logger = Logger(appName);
-  const [context, setContext] = useState({ geotabApi, geotabState, logger });
+  const [context, setContext] = useState({ geotabApi, geotabState, logger, cost: 0.0 });
 
   return (
     <>

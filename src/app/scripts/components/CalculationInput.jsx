@@ -1,13 +1,18 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useContext } from 'react'
+import GeotabContext from '../contexts/Geotab';
+
 import {
     TextInput
 } from '@geotab/zenith'
 
 const CalculationInput = ({ description }) => {
     const [cost, setCost] = useState(0);
+    const [context, setContext] = useContext(GeotabContext);
 
     const handleChange = useCallback((e) => {
-        setCost(e.target.value);
+        const costValue = e.target.value
+        setCost(costValue)
+        setContext({...context, cost: costValue})
     }, []);
     return (
         <div className='roi-calculation-input'>

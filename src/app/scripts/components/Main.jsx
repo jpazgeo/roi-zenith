@@ -1,17 +1,14 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
+import React, { useState, useEffect, useContext, useMemo, useCallback } from 'react';
 import GeotabContext from '../contexts/Geotab';
 import CalculationInput from './CalculationInput.jsx'
 import FuelEficiency from './FuelEfficiency.jsx'
 
 import {
     Header,
-    Table,
     Layout,
     FiltersBar,
     GET_TODAY_OPTION,
     Banner,
-    SummaryTileBar,
-    SummaryTile
 } from '@geotab/zenith'
 
 const Main = () => {
@@ -36,26 +33,19 @@ const Main = () => {
         }
     });
 
-    const { geotabApi, logger } = context;
-
-    useEffect(() => {
-        geotabApi.call('Get', {
-            typeName: 'Device',
-        }, (result) => {
-            logger.log(`Loaded ${result.length} devices`);
-            logger.log(result);
-            setDevices(result);
-        }, (error) => {
-            logger.error(error);
-        });
+    const handleDateRangeChange = useCallback((newValue) => {
+        console.log("newValue", newValue);
+        setDateRangeValue(newValue);
     }, []);
+
+    const { geotabApi, logger } = context;
 
     return (
         <Layout>
             <Header onFiltersBarOpen={() => setIsAllFiltersVisible(true)}>
                 <Header.Title pageName='ROI Calculator' />
                 <FiltersBar className='roi-filters-bar' isAllFiltersVisible={isAllFiltersVisible} toggleAllFilters={setIsAllFiltersVisible} getDefaultFiltersState={getDefaultFiltersState} onClearAllFilters={onClearAllFilters}>
-                    <FiltersBar.PeriodPicker id="dateRange" showInSidePanel sidePanelTitle="Date range" state={dateRangeValue} defaultState={dateRangeDefaultValue} onChange={(value) => setDateRangeValue(value)} props={{
+                    <FiltersBar.PeriodPicker id="dateRange" showInSidePanel sidePanelTitle="Date range" state={dateRangeValue} defaultState={dateRangeDefaultValue} onChange={handleDateRangeChange} props={{
                         options: ["Today", "LastWeek", "LastMonth", "LastThreeMonths", "ThisQuarter", "Custom"],
                         timeSelect: true
                     }} />
@@ -69,7 +59,7 @@ const Main = () => {
                     </Banner>
                 </div> : <></>}
                 <CalculationInput description={"Average fuel cost per gallon"} />
-                <FuelEficiency />
+                <FuelEficiency dateRange={dateRangeValue} />
             </div>
         </Layout >
     );
