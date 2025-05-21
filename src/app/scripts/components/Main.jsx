@@ -1,23 +1,22 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
 import GeotabContext from '../contexts/Geotab';
+import FuelEficiency from './FuelEfficiency.jsx'
 
 import {
-    ButtonType,
-    IconLink2,
-    IconLocationMap,
-    IconPackage2,
     Header,
-    Menu,
     Table,
     Layout,
-    DateRange,
     FiltersBar,
-    GET_TODAY_OPTION
+    GET_TODAY_OPTION,
+    Banner,
+    SummaryTileBar,
+    SummaryTile
 } from '@geotab/zenith'
 
 const Main = () => {
     const [context] = useContext(GeotabContext);
     const [devices, setDevices] = useState([]);
+    const [isBannerVisible, setIsBannerVisible] = useState(true)
     const [isAllFiltersVisible, setIsAllFiltersVisible] = useState(false);
 
     const today = useMemo(() => GET_TODAY_OPTION(), []);
@@ -50,43 +49,6 @@ const Main = () => {
         });
     }, []);
 
-    const columns = useMemo(() => [{
-        id: "col1",
-        title: "Name",
-        meta: {
-            defaultWidth: 200
-        }
-    }, {
-        id: "col2",
-        title: "Serial Number",
-        meta: {
-            defaultWidth: 200
-        }
-    }, {
-        id: "col3",
-        title: "License Plate",
-        meta: {
-            defaultWidth: 200
-        }
-    }, {
-        id: "col4",
-        title: "Asset Type",
-        meta: {
-            defaultWidth: 200
-        }
-    }], []);
-    const entities = useMemo(() => devices.map((device, index) => {
-        console.log('Device info', device);
-
-        return {
-            id: index.toString(),
-            col1: device.name,
-            col2: device.serialNumber ? device.serialNumber : "############",
-            col3: device.licensePlate ? device.licensePlate : "############",
-            col4: device.deviceType
-        }
-    }), [devices]);
-
     return (
         <Layout>
             <Header onFiltersBarOpen={() => setIsAllFiltersVisible(true)}>
@@ -98,8 +60,14 @@ const Main = () => {
                     }} />
                 </FiltersBar>
             </Header>
+
             <div style={{ height: "500px" }}>
-                <Table description="Fleet Assets" columns={columns} entities={entities}></Table>
+                {isBannerVisible ? <div className="roi-banner-content">
+                    <Banner type="warning" header="Disclaimer" icon onClose={() => setIsBannerVisible(false)}>
+                        These are estimations. External factors may affect the results.
+                    </Banner>
+                </div> : <></>}
+                <FuelEficiency />
             </div>
         </Layout >
     );
