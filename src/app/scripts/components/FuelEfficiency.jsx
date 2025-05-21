@@ -18,14 +18,14 @@ const FuelEfficiency = ({ startDate, endDate }) => {
 
     return (
         <SummaryTileBar>
-            <SummaryTile title="Distance Traveled">
+            <SummaryTile title="Distance Traveled" size='medium'>
                 <Overview
                     description="UNIT"
                     icon={<IconDispatchAsset className="zen-summary-tile-test" size="huger" />}
                     title={distance}
                 />
             </SummaryTile>
-            <SummaryTile title="Total Fuel Cost">
+            <SummaryTile title="Total Fuel Cost" size='medium'>
                 <Overview
                     description="UNIT"
                     icon={<IconDollar className="zen-summary-tile-test" size="huger" />}

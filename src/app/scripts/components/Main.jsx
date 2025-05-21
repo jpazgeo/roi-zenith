@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
 import GeotabContext from '../contexts/Geotab';
+import CalculationInput from './CalculationInput.jsx'
 import FuelEficiency from './FuelEfficiency.jsx'
 
 import {
@@ -53,7 +54,7 @@ const Main = () => {
         <Layout>
             <Header onFiltersBarOpen={() => setIsAllFiltersVisible(true)}>
                 <Header.Title pageName='ROI Calculator' />
-                <FiltersBar isAllFiltersVisible={isAllFiltersVisible} toggleAllFilters={setIsAllFiltersVisible} getDefaultFiltersState={getDefaultFiltersState} onClearAllFilters={onClearAllFilters}>
+                <FiltersBar className='roi-filters-bar' isAllFiltersVisible={isAllFiltersVisible} toggleAllFilters={setIsAllFiltersVisible} getDefaultFiltersState={getDefaultFiltersState} onClearAllFilters={onClearAllFilters}>
                     <FiltersBar.PeriodPicker id="dateRange" showInSidePanel sidePanelTitle="Date range" state={dateRangeValue} defaultState={dateRangeDefaultValue} onChange={(value) => setDateRangeValue(value)} props={{
                         options: ["Today", "LastWeek", "LastMonth", "LastThreeMonths", "ThisQuarter", "Custom"],
                         timeSelect: true
@@ -61,12 +62,13 @@ const Main = () => {
                 </FiltersBar>
             </Header>
 
-            <div style={{ height: "500px" }}>
+            <div>
                 {isBannerVisible ? <div className="roi-banner-content">
-                    <Banner type="warning" header="Disclaimer" icon onClose={() => setIsBannerVisible(false)}>
+                    <Banner type="warning" header="Disclaimer" icon onClose={() => setIsBannerVisible(false)} size='S'>
                         These are estimations. External factors may affect the results.
                     </Banner>
                 </div> : <></>}
+                <CalculationInput description={"Average fuel cost per gallon"} />
                 <FuelEficiency />
             </div>
         </Layout >
