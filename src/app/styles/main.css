@@ -22,3 +22,9 @@
     display: flex;
     justify-content: space-between;
 }
+
+.roi-summary-container {
+    display: flex;
+    width: 80%;
+    justify-content: center;
+}
