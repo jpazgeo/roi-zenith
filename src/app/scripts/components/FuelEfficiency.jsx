@@ -81,20 +81,6 @@ const FuelEfficiency = ({ dateRange }) => {
 
     return (
         <SummaryTileBar>
-            <SummaryTile title="Distance Traveled" size='medium'>
-                <Overview
-                    description="Miles"
-                    icon={<IconDispatchAsset className="zen-summary-tile-test" size="huger" />}
-                    title={distance.toFixed(2)}
-                />
-            </SummaryTile>
-            <SummaryTile title="Total Fuel Used" size='medium'>
-                <Overview
-                    description="Gallons"
-                    icon={<IconFuelGas className="zen-summary-tile-test" size="huger" />}
-                    title={totalFuelUsed.toFixed(2)}
-                />
-            </SummaryTile>
             <SummaryTile title="Total Fuel Cost" size='medium' tileType="error">
                 <Overview
                     description="$"
@@ -107,6 +93,20 @@ const FuelEfficiency = ({ dateRange }) => {
                     description="$"
                     icon={<IconBadge className="zen-summary-tile-test" size="huger" />}
                     title={totalNewFuelCost.toFixed(2)}
+                />
+            </SummaryTile>
+            <SummaryTile title="Distance Traveled" size='medium'>
+                <Overview
+                    description="Miles"
+                    icon={<IconDispatchAsset className="zen-summary-tile-test" size="huger" />}
+                    title={distance.toFixed(2)}
+                />
+            </SummaryTile>
+            <SummaryTile title="Total Fuel Used" size='medium'>
+                <Overview
+                    description="Gallons"
+                    icon={<IconFuelGas className="zen-summary-tile-test" size="huger" />}
+                    title={totalFuelUsed.toFixed(2)}
                 />
             </SummaryTile>
         </SummaryTileBar>
