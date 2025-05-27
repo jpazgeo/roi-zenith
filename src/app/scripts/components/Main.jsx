@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useMemo, useCallback } from 'react';
+import React, { useState, useContext, useMemo, useCallback } from 'react';
 import GeotabContext from '../contexts/Geotab';
 import CalculationInput from './CalculationInput.jsx'
 import FuelEficiency from './FuelEfficiency.jsx'
@@ -11,7 +11,8 @@ import {
     GET_TODAY_OPTION,
     Banner,
     IconMarketplace,
-    ButtonType
+    ButtonType,
+    Tabs
 } from '@geotab/zenith'
 
 const Main = () => {
@@ -19,6 +20,19 @@ const Main = () => {
     const [isBannerVisible, setIsBannerVisible] = useState(true)
     const [isAllFiltersVisible, setIsAllFiltersVisible] = useState(false);
     const [showMpRecommendation, setShowMpRecommendation] = useState(false);
+    const [activeTabId, setactiveTabId] = useState('tab1');
+
+    const tabs = useMemo(() => [{
+        id: "tab1",
+        name: "Fuel Efficiency"
+    }, {
+        id: "tab2",
+        name: "Accident Prevention"
+    }], []);
+
+    const onTabChange = useCallback((newVal) => {
+        setactiveTabId(newVal);
+    }, []);
 
     const today = useMemo(() => GET_TODAY_OPTION(), []);
     const dateRangeDefaultValue = useMemo(() => ({
@@ -43,7 +57,7 @@ const Main = () => {
 
     const toggleShowMpRecommendation = () => {
         console.log(`Current show MP recommendation value: ${showMpRecommendation}`);
-        
+
         setShowMpRecommendation(!showMpRecommendation)
         console.log(`New show MP recommendation value: ${showMpRecommendation}`);
     }
@@ -62,6 +76,7 @@ const Main = () => {
                             timeSelect: true
                         }} />
                     </FiltersBar>
+                    <Tabs key="headerTabs" tabs={tabs} activeTabIdId={activeTabId} onTabChange={onTabChange} />
                 </Header>
 
                 <div>
@@ -70,8 +85,10 @@ const Main = () => {
                             These are estimations. External factors may affect the results.
                         </Banner>
                     </div> : <></>}
-                    <CalculationInput costDescription={"Average fuel cost per gallon"} savingsDescription={"Savings percentage"} />
-                    <FuelEficiency dateRange={dateRangeValue} />
+                    {activeTabId === "tab1" ?
+                        <><CalculationInput costDescription={"Average fuel cost per gallon"} savingsDescription={"Savings percentage"} />
+                            <FuelEficiency dateRange={dateRangeValue} /></> : <></>}
+
                 </div>
                 <div className='roi-summary-container'><MarketplaceRecommendation showMpRecommendation={showMpRecommendation} toggleShowMpRecommendation={toggleShowMpRecommendation} /></div>
             </Layout >
