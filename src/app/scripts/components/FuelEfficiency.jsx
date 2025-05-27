@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import GeotabContext from '../contexts/Geotab';
 import { roundNumber } from '../utils/math'
+import CalculationInput from './CalculationInput.jsx'
 
 
 import {
@@ -80,36 +81,40 @@ const FuelEfficiency = ({ dateRange }) => {
     useEffect(calculateTotalFuelCost, [fuelPrice, totalFuelUsed, savings])
 
     return (
-        <SummaryTileBar>
-            <SummaryTile title="Total Fuel Cost" size='medium' tileType="error">
-                <Overview
-                    description="$"
-                    icon={<IconDollar className="zen-summary-tile-test" size="huger" />}
-                    title={totalFuelCost.toFixed(2)}
-                />
-            </SummaryTile>
-            <SummaryTile title="Total Fuel Cost after savings" size='medium' tileType="success">
-                <Overview
-                    description="$"
-                    icon={<IconBadge className="zen-summary-tile-test" size="huger" />}
-                    title={totalNewFuelCost.toFixed(2)}
-                />
-            </SummaryTile>
-            <SummaryTile title="Distance Traveled" size='medium'>
-                <Overview
-                    description="Miles"
-                    icon={<IconDispatchAsset className="zen-summary-tile-test" size="huger" />}
-                    title={distance.toFixed(2)}
-                />
-            </SummaryTile>
-            <SummaryTile title="Total Fuel Used" size='medium'>
-                <Overview
-                    description="Gallons"
-                    icon={<IconFuelGas className="zen-summary-tile-test" size="huger" />}
-                    title={totalFuelUsed.toFixed(2)}
-                />
-            </SummaryTile>
-        </SummaryTileBar>
+        <>
+            <CalculationInput costDescription={"Average fuel cost per gallon"} savingsDescription={"Savings percentage"} />
+
+            <SummaryTileBar>
+                <SummaryTile title="Total Fuel Cost" size='medium' tileType="error">
+                    <Overview
+                        description="$"
+                        icon={<IconDollar className="zen-summary-tile-test" size="huger" />}
+                        title={totalFuelCost.toFixed(2)}
+                    />
+                </SummaryTile>
+                <SummaryTile title="Total Fuel Cost after savings" size='medium' tileType="success">
+                    <Overview
+                        description="$"
+                        icon={<IconBadge className="zen-summary-tile-test" size="huger" />}
+                        title={totalNewFuelCost.toFixed(2)}
+                    />
+                </SummaryTile>
+                <SummaryTile title="Distance Traveled" size='medium'>
+                    <Overview
+                        description="Miles"
+                        icon={<IconDispatchAsset className="zen-summary-tile-test" size="huger" />}
+                        title={distance.toFixed(2)}
+                    />
+                </SummaryTile>
+                <SummaryTile title="Total Fuel Used" size='medium'>
+                    <Overview
+                        description="Gallons"
+                        icon={<IconFuelGas className="zen-summary-tile-test" size="huger" />}
+                        title={totalFuelUsed.toFixed(2)}
+                    />
+                </SummaryTile>
+            </SummaryTileBar>
+        </>
     )
 
 }

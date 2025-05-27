@@ -85,9 +85,7 @@ const Main = () => {
                             These are estimations. External factors may affect the results.
                         </Banner>
                     </div> : <></>}
-                    {activeTabId === "tab1" ?
-                        <><CalculationInput costDescription={"Average fuel cost per gallon"} savingsDescription={"Savings percentage"} />
-                            <FuelEficiency dateRange={dateRangeValue} /></> : <></>}
+                    {activeTabId === "tab1" ? <FuelEficiency dateRange={dateRangeValue} /> : <></>}
 
                 </div>
                 <div className='roi-summary-container'><MarketplaceRecommendation showMpRecommendation={showMpRecommendation} toggleShowMpRecommendation={toggleShowMpRecommendation} /></div>

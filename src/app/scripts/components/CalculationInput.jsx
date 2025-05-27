@@ -7,7 +7,7 @@ import {
 
 const CalculationInput = ({ costDescription, savingsDescription }) => {
     const [context, setContext] = useContext(GeotabContext);
-    const [cost, setCost] = useState(0);
+    const [cost, setCost] = useState(context.cost || 0.00);
     const [savings, setSavings] = useState(context.savings || 0.00)
 
     const handleCostChange = ((e) => {
