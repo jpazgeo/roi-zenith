@@ -76,7 +76,7 @@ const Main = () => {
                             timeSelect: true
                         }} />
                     </FiltersBar>
-                    <Tabs key="headerTabs" tabs={tabs} activeTabIdId={activeTabId} onTabChange={onTabChange} />
+                    <Tabs key="headerTabs" tabs={tabs} activeTabId={activeTabId} onTabChange={onTabChange} />
                 </Header>
 
                 <div>
