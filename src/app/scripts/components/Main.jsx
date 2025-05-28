@@ -1,6 +1,5 @@
 import React, { useState, useContext, useMemo, useCallback } from 'react';
 import GeotabContext from '../contexts/Geotab';
-import CalculationInput from './CalculationInput.jsx'
 import FuelEficiency from './FuelEfficiency.jsx'
 import AccidentPrevention from './AccidentPrevention.jsx'
 import MarketplaceRecommendation from './MarketplaceRecommendation.jsx'
@@ -89,7 +88,7 @@ const Main = () => {
                     {activeTabId === "tab1" ? <FuelEficiency dateRange={dateRangeValue} /> : <AccidentPrevention dateRange={dateRangeValue} />}
 
                 </div>
-                <div className='roi-summary-container'><MarketplaceRecommendation showMpRecommendation={showMpRecommendation} toggleShowMpRecommendation={toggleShowMpRecommendation} /></div>
+                <div className='roi-summary-container'><MarketplaceRecommendation showMpRecommendation={showMpRecommendation} toggleShowMpRecommendation={toggleShowMpRecommendation} recommendationType={activeTabId} /></div>
             </Layout >
         </>
     );

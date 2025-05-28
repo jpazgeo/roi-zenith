@@ -16,11 +16,11 @@ const MarketplaceRecommendation = ({ showMpRecommendation, toggleShowMpRecommend
     const [isLoading, setIsLoading] = useState(true);
 
     var iframeUrl = FUEL_SAVINGS_URL
-    var iframeTile = FUEL_SAVINGS_TITLE
+    var iframeTitle = FUEL_SAVINGS_TITLE
 
-    if (recommendationType === 1) {
+    if (recommendationType !== "tab1") {
         iframeUrl = RISK_MANAGEMENT_URL
-        iframeTile = RISK_MANAGEMENT_TITLE
+        iframeTitle = RISK_MANAGEMENT_TITLE
     }
 
     useEffect(() => {
@@ -34,7 +34,7 @@ const MarketplaceRecommendation = ({ showMpRecommendation, toggleShowMpRecommend
     }, [showMpRecommendation])
 
     return (
-        <Modal isOpen={showMpRecommendation} onClose={() => { toggleShowMpRecommendation() }} title="Fuel Saving Recommendations">
+        <Modal isOpen={showMpRecommendation} onClose={() => { toggleShowMpRecommendation() }} title={iframeTitle}>
             <Waiting isLoading={isLoading} />
             {isLoading ? <div style={{display: 'block', width: '500px', height: '600px'}}></div> : <></>}
             <iframe src={iframeUrl} width={500} height={600} hidden={isLoading}></iframe>
