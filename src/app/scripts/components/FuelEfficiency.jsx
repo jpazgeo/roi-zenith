@@ -3,7 +3,6 @@ import GeotabContext from '../contexts/Geotab';
 import { roundNumber } from '../utils/math'
 import CalculationInput from './CalculationInput.jsx'
 
-
 import {
     SummaryTileBar,
     SummaryTile,
@@ -18,7 +17,7 @@ import { Overview } from '@geotab/zenith/dist/overview/overview'
 const RESULTS_LIMIT = 50000
 
 const FuelEfficiency = ({ dateRange }) => {
-    const [context, setContext] = useContext(GeotabContext);
+    const [context] = useContext(GeotabContext);
     const { geotabApi, logger, cost: fuelPrice, savings } = context;
 
     const [distance, setDistance] = useState(0.00)
