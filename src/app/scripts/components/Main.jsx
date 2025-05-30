@@ -1,5 +1,4 @@
 import React, { useState, useContext, useMemo, useCallback } from 'react';
-import GeotabContext from '../contexts/Geotab';
 import FuelEficiency from './FuelEfficiency.jsx'
 import AccidentPrevention from './AccidentPrevention.jsx'
 import MarketplaceRecommendation from './MarketplaceRecommendation.jsx'
@@ -16,7 +15,6 @@ import {
 } from '@geotab/zenith'
 
 const Main = () => {
-    const [context] = useContext(GeotabContext);
     const [isBannerVisible, setIsBannerVisible] = useState(true)
     const [isAllFiltersVisible, setIsAllFiltersVisible] = useState(false);
     const [showMpRecommendation, setShowMpRecommendation] = useState(false);
@@ -62,13 +60,11 @@ const Main = () => {
         console.log(`New show MP recommendation value: ${showMpRecommendation}`);
     }
 
-    const { geotabApi, logger } = context;
-
     return (
         <>
             <Layout>
                 <Header onFiltersBarOpen={() => setIsAllFiltersVisible(true)}>
-                    <Header.Title pageName='ROI Calculator' />
+                    <Header.Title pageName='ROI Estimator' isBeta/>
                     <Header.Button onClick={toggleShowMpRecommendation} id="4" important={true} type={ButtonType.Secondary} icon={IconMarketplace}>Marketplace Recommendations</Header.Button>
                     <FiltersBar className='roi-filters-bar' isAllFiltersVisible={isAllFiltersVisible} toggleAllFilters={setIsAllFiltersVisible} getDefaultFiltersState={getDefaultFiltersState} onClearAllFilters={onClearAllFilters}>
                         <FiltersBar.PeriodPicker id="dateRange" showInSidePanel sidePanelTitle="Date range" state={dateRangeValue} defaultState={dateRangeDefaultValue} onChange={handleDateRangeChange} props={{

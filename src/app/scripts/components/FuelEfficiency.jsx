@@ -79,19 +79,22 @@ const FuelEfficiency = ({ dateRange }) => {
 
     useEffect(calculateTotalFuelCost, [fuelPrice, totalFuelUsed, savings])
 
+    const totalCostColor = totalFuelCost == 0 ? "" : "error"
+    const totalSavingsColor = totalFuelCost == totalNewFuelCost ? "" : "success"
+
     return (
         <>
             <CalculationInput costDescription={"Average fuel cost per gallon"} savingsDescription={"Savings percentage"} />
 
             <SummaryTileBar>
-                <SummaryTile title="Total Fuel Cost" size='medium' tileType="error">
+                <SummaryTile title="Total Fuel Cost" size='medium' tileType={totalCostColor}>
                     <Overview
                         description="$"
                         icon={<IconDollar className="zen-summary-tile-test" size="huger" />}
                         title={totalFuelCost.toFixed(2)}
                     />
                 </SummaryTile>
-                <SummaryTile title="Total Fuel Cost after savings" size='medium' tileType="success">
+                <SummaryTile title="Total Fuel Cost after savings" size='medium' tileType={totalSavingsColor}>
                     <Overview
                         description="$"
                         icon={<IconBadge className="zen-summary-tile-test" size="huger" />}
