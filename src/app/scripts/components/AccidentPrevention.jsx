@@ -64,18 +64,21 @@ const AccidentPrevention = ({ dateRange }) => {
 
     useEffect(calculateTotalAccidentsCost, [accidentCost, accidentCount, accidentSavings])
 
+    const totalCostColor = totalAccidentCost == 0 ? "" : "error"
+    const totalSavingsColor = totalAccidentCost == totalNewAccidentsCost ? "" : "success"
+
     return (
         <>
             <AccidentCalculationInput costDescription={"Average cost per accident"} savingsDescription={"Savings percentage"} />
             <SummaryTileBar>
-                <SummaryTile title="Total Accident Cost" size='medium' tileType="error">
+                <SummaryTile title="Total Accident Cost" size='medium' tileType={totalCostColor}>
                     <Overview
                         description="$"
                         icon={<IconDollar className="zen-summary-tile-test" size="huger" />}
                         title={totalAccidentCost}
                     />
                 </SummaryTile>
-                <SummaryTile title="Total Accident Cost after savings" size='medium' tileType="success">
+                <SummaryTile title="Total Accident Cost after savings" size='medium' tileType={totalSavingsColor}>
                     <Overview
                         description="$"
                         icon={<IconBadge className="zen-summary-tile-test" size="huger" />}
